@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  #config-container>* {
+    @apply py-4;
+  }
+  
+  table {
+    @apply table-fixed;
+  }
+  
+  td {
+    @apply align-text-top;
+  }
+  
+  td div {
+    @apply whitespace-break-spaces overflow-hidden break-words;
+  }
+}

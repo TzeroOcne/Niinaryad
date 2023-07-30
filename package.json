@@ -5,17 +5,42 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node build.js",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "@tsconfig/svelte": "^5.0.0",
+    "@types/chrome": "^0.0.241",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-svelte": "^2.32.2",
+    "postcss": "^8.4.26",
+    "sass": "^1.63.6",
     "svelte": "^4.0.3",
     "svelte-check": "^3.4.4",
+    "tailwindcss": "^3.3.3",
     "tslib": "^2.6.0",
     "typescript": "^5.0.2",
+    "url": "^0.11.1",
     "vite": "^4.4.0"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "^1.4.5",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@sveltejs/adapter-auto": "^2.1.0",
+    "@types/papaparse": "^5.3.7",
+    "autoprefixer": "^10.4.14",
+    "flowbite": "^1.7.0",
+    "flowbite-svelte": "^0.40.1",
+    "google-auth-library": "^8.9.0",
+    "jose": "^4.14.4",
+    "mime-db": "^1.52.0",
+    "papaparse": "^5.4.1",
+    "svelte-fa": "^3.0.4",
+    "tailwind-merge": "^1.14.0"
   }
 }

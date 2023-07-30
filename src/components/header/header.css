@@ -1,0 +1,36 @@
+#header-container * {
+  background-color: unset;
+}
+
+#navbar>* {
+  height: 100%;
+  max-height: 100%;
+}
+
+#navitem-container {
+  align-items: center;
+}
+
+#navitem-container * {
+  height: fit-content;
+  max-height: unset;
+  padding: 0;
+}
+
+#navitem-container ul {
+  width: 100%;
+}
+
+#navitem-container ul li {
+  padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  #navitem-container ul button {
+    margin: 0 0.5rem;
+  }
+}
+
+#navitem-container ul button:not(:hover) {
+  border-color: transparent;
+}
