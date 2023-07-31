@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --nnryd-button-primary-color: rgb(204 69 34);
+}
+
 @layer components {
   #config-container>* {
     @apply py-4;
@@ -18,4 +22,20 @@
   td div {
     @apply whitespace-break-spaces overflow-hidden break-words;
   }
+  
+  button#open-folder-button, button#breadcrumb-button {
+    @apply bg-transparent rounded-full;
+  }
+}
+
+button#open-folder-button, button#breadcrumb-button {
+  box-shadow: none;
+}
+
+button#open-folder-button:hover {
+  border-color: var(--nnryd-button-primary-color);
+}
+
+button#breadcrumb-button:hover {
+  color: var(--nnryd-button-primary-color);
 }

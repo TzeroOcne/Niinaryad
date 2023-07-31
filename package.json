@@ -12,7 +12,6 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "@tsconfig/svelte": "^5.0.0",
-    "@types/chrome": "^0.0.241",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.45.0",
@@ -32,6 +31,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@sveltejs/adapter-auto": "^2.1.0",
+    "@types/chrome": "^0.0.241",
     "@types/papaparse": "^5.3.7",
     "autoprefixer": "^10.4.14",
     "flowbite": "^1.7.0",

@@ -1,11 +1,14 @@
 <script lang="ts">
   import { loadFromFile } from '@features/bookmark/bookmark.service';
-  import { keyConfigStore, keyFileStore } from '@lib/app.store';
-  import { Fileupload, Label, Table, TableBody, TableBodyCell, TableBodyRow } from 'flowbite-svelte';
+  import { chromeAPI, keyConfigStore, keyFileStore } from '@lib/app.store';
+  import { Label, Spinner, Table, TableBody, TableBodyCell, TableBodyRow } from 'flowbite-svelte';
+  import { currentRootStore, folderStack } from './Config';
+  import FolderBreadcrumb from './FolderBreadcrumb.svelte';
+  import FolderList from './FolderList.svelte';
   import './config.css';
-  // const reader = new FileReader();
   let value = $keyFileStore;
   let files:FileList|undefined;
+  let bookmarkTree:chrome.bookmarks.BookmarkTreeNode[];
   
   const readFile = async (file:File) => {
     console.log(await loadFromFile(file));
@@ -19,10 +22,19 @@
   $: {
     keyFileStore.set(value);
   }
+  
+  $: if (bookmarkTree?.[0]) {
+    currentRootStore.set(bookmarkTree[0]);
+    folderStack.update(value => [...value, bookmarkTree[0]]);
+  }
+  
+  $: if (chromeAPI?.bookmarks) (async () => {
+    bookmarkTree = await chromeAPI.bookmarks.getTree();
+  })();
 </script>
 
 <div id="config-container" class="mx-[25%]">
-  <div class="text-xl font-bold">
+  <!-- <div class="text-xl font-bold">
     Load
   </div>
   <div>
@@ -30,6 +42,22 @@
       <span>Load Data From File:</span>
       <Fileupload bind:value bind:files class="mt-4 dark:text-white" accept=".json,.csv"/>
     </Label>
+  </div> -->
+  <div class="text-xl font-bold">
+    Bookmarks
+  </div>
+  <div>
+    <FolderBreadcrumb />
+    <Label class="my-4">
+      <div>Choose Bookmarks Folder To Load</div>
+    </Label>
+    <div id="folder-list-container" class="text-left font-mono whitespace-break-spaces my-4">
+      {#if bookmarkTree}
+      <FolderList folderList={$currentRootStore?.children ?? []} />
+      {:else}
+      <Spinner />
+      {/if}
+    </div>
   </div>
   {#if $keyConfigStore?.project_id}
   <Table striped>

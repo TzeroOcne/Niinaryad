@@ -32,5 +32,14 @@
     overflow-y: auto;
     overflow-x: hidden;
     height: calc(100% - 4rem);
+    scrollbar-gutter: stable;
+  }
+  
+  content::-webkit-scrollbar {
+    width: 16px;
+  }
+  
+  content::-webkit-scrollbar-thumb {
+    background-color: grey;
   }
 </style>

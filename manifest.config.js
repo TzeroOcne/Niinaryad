@@ -20,6 +20,7 @@ export default {
     'storage',
     'tabs',
     'unlimitedStorage',
+    'bookmarks',
   ],
   key: publicKey,
 };

@@ -3,8 +3,8 @@ import { initParams } from '@lib/app.store';
 import type { StoreNameType } from '@types';
 import { writable } from 'svelte/store';
 
-export const initialCollection = initParams.get('collection') as StoreNameType ?? 'bookmark';
-let collectionVal:StoreNameType = StoreNameConst.includes(initialCollection) ? initialCollection : 'bookmark';
+export const initialCollection = initParams.get('collection') as StoreNameType;
+let collectionVal:StoreNameType = StoreNameConst.includes(initialCollection) ? initialCollection : undefined;
 export const collectionStore = writable(collectionVal);
 collectionStore.subscribe(val => {
   collectionVal = val;
