@@ -1,6 +1,6 @@
 <script lang="ts">
 </script>
 
-<div>
+<div class="pt-8">
   In Chrome Extension
 </div>

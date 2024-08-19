@@ -8,11 +8,54 @@
   import './config.css';
   let value = $keyFileStore;
   let files:FileList|undefined;
-  let bookmarkTree:chrome.bookmarks.BookmarkTreeNode[];
+  let currentChildren:chrome.bookmarks.BookmarkTreeNode[];
+  
+  const refreshChildren = async () => {
+    if (chromeAPI?.bookmarks && $currentRootStore?.id) {
+      currentChildren = await chromeAPI.bookmarks.getChildren($currentRootStore.id);
+    } else {
+      currentChildren = [];
+    }
+  };
+  
+  currentRootStore.subscribe(async () => {
+    refreshChildren();
+  });
   
   const readFile = async (file:File) => {
     console.log(await loadFromFile(file));
   };
+  
+  const onChildrenChanged = async (id:string) => {
+    if (chromeAPI?.bookmarks) {
+      const [{ parentId }] = await chromeAPI.bookmarks.get(id);
+      if (parentId === $currentRootStore?.id) {
+        refreshChildren();
+      }
+    }
+  };
+  
+  const onParentChanged = async (id:string) => {
+    if (id === $currentRootStore?.id) {
+      refreshChildren();
+    }
+  };
+  
+  const onParentAffected = async (_id:string, {
+    parentId, oldParentId
+  }:{ parentId?:string, oldParentId?:string }) => {
+    if (parentId === $currentRootStore?.id && oldParentId === $currentRootStore?.id) {
+      refreshChildren();
+    }
+  };
+  
+  if (chromeAPI?.bookmarks) {
+    chromeAPI.bookmarks.onChanged.addListener(onChildrenChanged);
+    chromeAPI.bookmarks.onCreated.addListener(onParentAffected);
+    chromeAPI.bookmarks.onRemoved.addListener(onParentAffected);
+    chromeAPI.bookmarks.onMoved.addListener(onParentAffected);
+    chromeAPI.bookmarks.onChildrenReordered.addListener(onParentChanged);
+  }
 
   $: if (files?.[0]) {
     const [ file ] = files;
@@ -23,13 +66,10 @@
     keyFileStore.set(value);
   }
   
-  $: if (bookmarkTree?.[0]) {
-    currentRootStore.set(bookmarkTree[0]);
-    folderStack.update(value => [...value, bookmarkTree[0]]);
-  }
-  
   $: if (chromeAPI?.bookmarks) (async () => {
-    bookmarkTree = await chromeAPI.bookmarks.getTree();
+    const [ rootBookmark ] = await chromeAPI.bookmarks.get('0');
+    currentRootStore.set(rootBookmark);
+    folderStack.set([ rootBookmark ]);
   })();
 </script>
 
@@ -52,8 +92,8 @@
       <div>Choose Bookmarks Folder To Load</div>
     </Label>
     <div id="folder-list-container" class="text-left font-mono whitespace-break-spaces my-4">
-      {#if bookmarkTree}
-      <FolderList folderList={$currentRootStore?.children ?? []} />
+      {#if $currentRootStore}
+      <FolderList folderList={currentChildren ?? []} />
       {:else}
       <Spinner />
       {/if}

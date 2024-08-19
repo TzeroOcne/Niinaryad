@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node build.js",
+    "serve": "vite build --watch",
+    "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
@@ -30,6 +31,7 @@
     "@floating-ui/dom": "^1.4.5",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@samrum/vite-plugin-web-extension": "^5.0.0",
     "@sveltejs/adapter-auto": "^2.1.0",
     "@types/chrome": "^0.0.241",
     "@types/papaparse": "^5.3.7",

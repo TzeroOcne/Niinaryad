@@ -22,7 +22,7 @@
   <TableBody>
     {#each folderList as folder }
     <TableBodyRow>
-      <TableBodyCell class="pr-0">
+      <TableBodyCell class="pr-0 overflow-x-hidden">
         {folder.title}
       </TableBodyCell>
       <TableBodyCell class="pl-0 pr-8 w-16">
